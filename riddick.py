@@ -14,7 +14,7 @@ headers = {
 
 # Award options
 year = 2016
-simple = True
+collapse_subcategories = False
 festivals = [('CL', 'cannes-lions'), ('LI', 'lions-innovation'), ('LH', 'lions-health'), ('LE', 'lions-entertinment')]
 
 # Local options
@@ -112,7 +112,7 @@ def pillage_categories(cat):
 								if category_slug == result_subcategory:
 									directory = os.path.join(downloads, str(year), festival_slug, category_slug, prize_description)
 
-							if simple is True:
+							if collapse_subcategories is True:
 								directory = os.path.join(downloads, str(year), festival_slug, category_slug, prize_description)
 
 							# Create the directory
