@@ -4,6 +4,7 @@ A Python script that "borrows" case study videos and other media from the Cannes
 
 ## Requirements
 This script requires Python 2.7+. All dependencies are included in requirements.txt. To install, simply run:
+
 ```pip install -r requirements.txt```
 
 ## Running
