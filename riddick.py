@@ -15,6 +15,7 @@ headers = {
 # Award options
 year = 2016
 collapse_subcategories = True
+ignore_shortlists = True
 festivals = [('CL', 'cannes-lions'), ('LI', 'lions-innovation'), ('LH', 'lions-health'), ('LE', 'lions-entertinment')]
 
 # Local options
@@ -101,7 +102,7 @@ def pillage_categories(cat):
 				if 'mainMedia' in result:
 					main_media = result['mainMedia']
 					for prize in prizes:
-						if prize['description'] != 'Shortlist':
+						if (ignore_shortlists is False) or (ignore_shortlists is True and prize['description'] != 'Shortlist'):
 							subcategory = slugify(mc_result['name'])
 							result_subcategory = slugify(c_result['name'])
 							prize_description = slugify(prize['description'])
