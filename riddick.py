@@ -5,18 +5,19 @@ import time
 from slugify import slugify
 from multiprocessing import Process, Pool
 
+# API Options
 endpoint = "http://www.canneslionsarchive.com/api/winners"
 headers = {
 	'Authorization':'Basic czd2cURxa2NIN1RvKkQ4NEg5X0FGdURURnc5SWFmLUFvOXlD',
 	'Content-Type': 'application/json'
 }
 
+# Award options
 year = 2016
 simple = True
 festivals = [('CL', 'cannes-lions'), ('LI', 'lions-innovation'), ('LH', 'lions-health'), ('LE', 'lions-entertinment')]
-#categories = ['creative-effectiveness', 'cyber', 'design', 'digital-craft', 'direct', 'film', 'film-craft', 'glass', 'grand-prix-for-good', 'integrated', 'media', 'mobile', 'outdoor', 'pr', 'print-and-publishing', 'product-design', 'promo-and-activation', 'radio', 'titanium']
 
-
+# Local options
 downloads = 'downloads'
 
 def createDirectory(dir):
@@ -113,18 +114,21 @@ def pillage_categories(cat):
 
 							if simple is True:
 								directory = os.path.join(downloads, str(year), festival_slug, category_slug, prize_description)
-								
+
+							# Create the directory
 							createDirectory(directory)
 							media_url = main_media['mediaUri']
 							filename = result['friendlyName']
 							extension = main_media['extension']
 
 							path = os.path.join(directory, "%s.%s" % (filename, extension))
-							#print "Saving %s" % path
 							save_video(media_url, directory, filename, extension)
 							winners = winners +1
 
 	print "%d winners in %s" % (winners, category)
 
-for festival in festivals:
-	pillage_festival(festival)
+def main():
+	for festival in festivals:
+		pillage_festival(festival)
+
+main()
