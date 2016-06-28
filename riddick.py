@@ -4,13 +4,17 @@ import re
 import time
 from slugify import slugify
 from multiprocessing import Process, Pool
+from progressbar import AnimatedMarker, Bar, BouncingBar, Counter, ETA, FileTransferSpeed, FormatLabel, Percentage, ProgressBar
 
 # API Options
 endpoint = "http://www.canneslionsarchive.com/api/winners"
 headers = {
 	'Authorization':'Basic czd2cURxa2NIN1RvKkQ4NEg5X0FGdURURnc5SWFmLUFvOXlD',
-	'Content-Type': 'application/json'
+	'Content-Type': 'application/json',
+	'User-Agent': 'Riddick v0.1'
 }
+
+session = requests.Session()
 
 # Award options
 year = 2016
@@ -35,16 +39,22 @@ def save_video(url, directory, filename, extension):
 		os.remove(path)
 
 	if not os.path.exists(path):
-		response = requests.get(url, stream=True)
-		print "Saving %s" % path
+		response = session.get(url, stream=True)
 		with open(temp, 'w') as f:
 			f.write('\n')
 
 		with open(path, 'wb') as f:
+			total_length = int(response.headers.get('Content-Length'))
+			widgets = ['Saving %s: ' % path, Percentage(), ' ', Bar(), ' ', ETA(), ' ', FileTransferSpeed()]
+			pbar = ProgressBar(widgets=widgets, maxval=total_length).start()
+			bytes_downloaded = 0
 			for chunk in response.iter_content(chunk_size=1024):
 				if chunk: # filter out keep-alive new chunks
 					f.write(chunk)
 					f.flush()
+					bytes_downloaded += len(chunk)
+					pbar.update(bytes_downloaded)
+			pbar.finish()
 
 		# Delete temp file
 		os.remove(temp)
