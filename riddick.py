@@ -14,7 +14,7 @@ headers = {
 
 # Award options
 year = 2016
-collapse_subcategories = False
+collapse_subcategories = True
 festivals = [('CL', 'cannes-lions'), ('LI', 'lions-innovation'), ('LH', 'lions-health'), ('LE', 'lions-entertinment')]
 
 # Local options
@@ -106,6 +106,9 @@ def pillage_categories(cat):
 							result_subcategory = slugify(c_result['name'])
 							prize_description = slugify(prize['description'])
 							directory = os.path.join(downloads, str(year), festival_slug, category_slug, subcategory, result_subcategory, prize_description)
+							media_url = main_media['mediaUri']
+							filename = result['friendlyName']
+							extension = main_media['extension']
 
 							if category_slug == subcategory:
 								directory = os.path.join(downloads, str(year), festival_slug, category_slug, result_subcategory, prize_description)
@@ -117,12 +120,11 @@ def pillage_categories(cat):
 
 							# Create the directory
 							createDirectory(directory)
-							media_url = main_media['mediaUri']
-							filename = result['friendlyName']
-							extension = main_media['extension']
 
-							path = os.path.join(directory, "%s.%s" % (filename, extension))
+							# Save video
 							save_video(media_url, directory, filename, extension)
+
+							# Keep track of winners
 							winners = winners +1
 
 	print "%d winners in %s" % (winners, category)
