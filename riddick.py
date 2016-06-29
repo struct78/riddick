@@ -139,10 +139,10 @@ def pillage_categories(cat):
 							winners = winners +1
 
 	print "%d winners in %s" % (winners, category)
-	print "----------------------------------"
 
 def main():
 	for festival in festivals:
+		print "----------------------------------"
 		print "Pillaging %s" % festival[1]
 		print "----------------------------------"
 		pillage_festival(festival)
