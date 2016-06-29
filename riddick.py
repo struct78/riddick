@@ -20,7 +20,7 @@ session = requests.Session()
 year = 2016
 collapse_subcategories = True
 ignore_shortlists = True
-festivals = [('CL', 'cannes-lions'), ('LI', 'lions-innovation'), ('LH', 'lions-health'), ('LE', 'lions-entertinment')]
+festivals = [('CL', 'cannes-lions'), ('LI', 'lions-innovation'), ('LH', 'lions-health'), ('LE', 'lions-entertainment')]
 
 # Local options
 downloads = 'downloads'
@@ -139,9 +139,12 @@ def pillage_categories(cat):
 							winners = winners +1
 
 	print "%d winners in %s" % (winners, category)
+	print "----------------------------------"
 
 def main():
 	for festival in festivals:
+		print "Pillaging %s" % festival[1]
+		print "----------------------------------"
 		pillage_festival(festival)
 
 main()
